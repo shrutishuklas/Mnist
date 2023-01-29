@@ -95,8 +95,8 @@ for breakpt = 2:length(y-1)
     delsbck = (mbck(breakpt).*x(breakpt:end)+bbck(breakpt))-y(breakpt:end);
     %disp([sum(abs(delsfwd))/length(delsfwd), sum(abs(delsbck))/length(delsbck)])
 
-    %error_curve(breakpt) = sum(abs(delsfwd))/sqrt(length(delsfwd)) + sum(abs(delsbck))/sqrt(length(delsbck));
-    error_curve(breakpt) = sum(abs(delsfwd))+ sum(abs(delsbck));
+    error_curve(breakpt) = sqrt(sum(abs(delsfwd.^2))/length(delsfwd)) + sqrt(sum(abs(delsbck.^2))/length(delsbck));
+    %error_curve(breakpt) = sum(abs(delsfwd^2)+ sum(abs(delsbck^2));
 
 
 end
