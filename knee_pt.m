@@ -89,20 +89,19 @@ bbck = flipud(-(sigma_x.*sigma_xy-sigma_xx.*sigma_y) ./det);
 
 %figure out the sum of per-point errors for left- and right- of-knee fits
 error_curve = nan(size(y));
-
 for breakpt = 2:length(y-1)
     delsfwd = (mfwd(breakpt).*x(1:breakpt)+bfwd(breakpt))-y(1:breakpt);
     delsbck = (mbck(breakpt).*x(breakpt:end)+bbck(breakpt))-y(breakpt:end);
     %disp([sum(abs(delsfwd))/length(delsfwd), sum(abs(delsbck))/length(delsbck)])
 
-    error_curve(breakpt) = (sum(abs(delsfwd)))/length(delsfwd) + (sum(abs(delsbck)))/length(delsbck);
-    %error_curve(breakpt) = sum(abs(delsfwd^2)+ sum(abs(delsbck^2));
+    %error_curve(breakpt) = sqrt((sum(abs(delsfwd.^2)))/length(delsfwd)) + sqrt((sum(abs(delsbck.^2)))/length(delsbck));
+    error_curve(breakpt) = sum(abs(delsfwd))+ sum(abs(delsbck));
 
 
 end
 endpt=length(y);
 delerr= (mfwd(endpt).*x(1:endpt)+bfwd(endpt))-y(1:endpt);
-err=(sum(abs(delerr)))/(length(delerr));
+err=(sum(abs(delerr)));
 
 %find location of the min of the error curve
 [brk_err,loc] = min(error_curve);
@@ -113,4 +112,5 @@ err_ratio=(brk_err)/err;
 res_x =err_ratio;
 idx_of_result = idx(loc);
 end
+
 
